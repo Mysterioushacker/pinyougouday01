@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>angularJS测试</title>
+    <script src="js/angular.min.js"></script>
+    <script type="text/javascript">
+        //创建angular模块
+        //参数1：模块的名称
+        //参数2：要加载的其他模块列表，如果没有也得加这个空数组，不加表示获取一个模块
+        var app = angular.module("app",[]);
+
+        //注册处理器，名称为myController,注入$scope上下文服务
+        app.controller("myController",function ($scope) {
+            $scope.add=function () {
+                $scope.z = parseInt($scope.x) + parseInt($scope.y);
+            }
+        });
+    </script>
+</head>
+<body ng-app="app" ng-controller="myController">
+x:<input ng-model="x"><br>
+y:<input ng-model="y">
+<br>
+<button ng-click="add()">点击进行计算</button>
+<br>
+x + y = {{z}}
+</body>
+</html>
