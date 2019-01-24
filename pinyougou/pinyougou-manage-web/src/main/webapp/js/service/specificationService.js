@@ -29,6 +29,7 @@ app.service("specificationService",function ($http) {
         return $http.post("../specification/search.do?page=" + page + "&rows=" + rows, searchEntity);
 
     };
+
     //查询规格列表
     this.selectOptionList = function () {
         return $http.get("../specification/selectOptionList.do");

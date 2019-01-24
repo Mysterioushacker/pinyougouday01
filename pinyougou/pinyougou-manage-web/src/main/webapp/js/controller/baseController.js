@@ -20,7 +20,7 @@ app.controller("baseController",function ($scope) {
     //定义一个放置选择了id的数组
     $scope.selectedIds = [];
 
-    $scope.updateChecked = function ($event, id) {
+    $scope.updateSelection = function ($event, id) {
         //判断是否选中
         if($event.target.checked){
             $scope.selectedIds.push(id);
@@ -30,5 +30,17 @@ app.controller("baseController",function ($scope) {
             $scope.selectedIds.splice(index,1);
         }
     };
+
+    $scope.jsonToString = function (jsonStr, key) {
+        var str = "";
+        var jsonArray = JSON.parse(jsonStr);
+        for(var i=0;i<jsonArray.length;i++){
+            if(i>0){
+                str += ",";
+            }
+            str += jsonArray[i][key];
+        }
+        return str;
+    }
 
 });
