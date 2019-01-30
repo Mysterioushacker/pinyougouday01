@@ -3,6 +3,7 @@ package com.pinyougou.vo;
 import java.io.Serializable;
 
 public class Result implements Serializable{
+
     private Boolean success;
     private String message;
 
@@ -12,11 +13,11 @@ public class Result implements Serializable{
     }
 
     public static Result ok(String message){
-        return new Result(true,message);
+        return new Result(true, message);
     }
 
     public static Result fail(String message){
-        return new Result(false,message);
+        return new Result(false, message);
     }
 
     public Boolean getSuccess() {

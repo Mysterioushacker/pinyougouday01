@@ -39,7 +39,6 @@
             <section class="content">
 
                 <div class="box-body">
-
                     <!--tab页-->
                     <div class="nav-tabs-custom">
 
@@ -346,6 +345,7 @@
 
 	var editor;
 	KindEditor.ready(function(K) {
+	    //选取属性name的值为content的那些textarea
 		editor = K.create('textarea[name="content"]', {
 			allowFileManager : true
 		});

@@ -23,6 +23,7 @@ public class SpecificationOptionServiceImpl extends BaseServiceImpl<TbSpecificat
     @Override
     public PageResult search(Integer page, Integer rows, TbSpecificationOption specificationOption) {
         PageHelper.startPage(page, rows);
+
         Example example = new Example(TbSpecificationOption.class);
         Example.Criteria criteria = example.createCriteria();
         /*if(!StringUtils.isEmpty(specificationOption.get***())){

@@ -1,6 +1,6 @@
-app.controller("itemCatController", function ($scope, $controller, itemCatService) {
+app.controller("itemCatController", function ($scope, $controller, itemCatService,typeTemplateService) {
 
-    //加载baseController控制器并传入1个作用域，与angularJs运行时作用域相同.
+    //加载baseController控制器并传入1个作用域，与an   gularJs运行时作用域相同.
     $controller("baseController",{$scope:$scope});
 
     //加载列表数据
@@ -17,8 +17,13 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
         });
     };
 
+
     $scope.save = function () {
         var object;
+
+        $scope.entity.typeId = $("#typeTemplateId").val();
+        $scope.entity.parentId = $scope.parentId;
+
         if($scope.entity.id != null){//更新
             object = itemCatService.update($scope.entity);
         } else {//新增
@@ -26,7 +31,7 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
         }
         object.success(function (response) {
             if(response.success){
-                $scope.reloadList();
+                $scope.findByParentId(0);
             } else {
                 alert(response.message);
             }
@@ -36,6 +41,9 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
     $scope.findOne = function (id) {
         itemCatService.findOne(id).success(function (response) {
             $scope.entity = response;
+
+            //设置类型模板
+            $("#typeTemplateId").select2("val",$scope.entity.typeId);
         });
     };
 
@@ -90,6 +98,15 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
         }
 
         $scope.findByParentId(entity.id);
-    }
+    };
 
+
+    $scope.findTypeTemplateList = {data:[]};
+    $scope.findTypeTemplateList = function () {
+        typeTemplateService.selectOptionList().success(function (response) {
+            $scope.typeTemplateList = {data:response}
+        }).error(function (response) {
+            alert("加载失败");
+        })
+    }
 });

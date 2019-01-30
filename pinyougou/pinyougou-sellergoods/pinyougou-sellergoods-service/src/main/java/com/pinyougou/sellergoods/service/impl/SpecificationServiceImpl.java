@@ -24,7 +24,6 @@ public class SpecificationServiceImpl extends BaseServiceImpl<TbSpecification> i
 
     @Autowired
     private SpecificationMapper specificationMapper;
-
     @Autowired
     private SpecificationOptionMapper specificationOptionMapper;
 
@@ -44,40 +43,39 @@ public class SpecificationServiceImpl extends BaseServiceImpl<TbSpecification> i
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
-    //新增规格
-    @Override
+    //新建
     public void add(Specification specification) {
         //新增规格
-        specificationMapper.insertSelective(specification.getSpecification());
+        add(specification.getSpecification());
 
         //新增规格选项
-        if(specification.getSpecificationOptionList() != null && specification.getSpecificationOptionList().size()>0){
-            for(TbSpecificationOption tbSpecificationOption:specification.getSpecificationOptionList()){
+        if(specification.getSpecificationOptionList() != null && specification.getSpecificationOptionList().size() > 0){
+            for(TbSpecificationOption tbSpecificationOption : specification.getSpecificationOptionList()){
                 tbSpecificationOption.setSpecId(specification.getSpecification().getId());
+                //保存规格选项
                 specificationOptionMapper.insertSelective(tbSpecificationOption);
             }
         }
     }
 
-    @Override
+    //回显
     public Specification findOne(Long id) {
-        Specification specification = new Specification();
 
         //查询并设置规格
-        //根据id查询规格信息
+        Specification specification = new Specification();
         specification.setSpecification(specificationMapper.selectByPrimaryKey(id));
 
-        //创建选项对象
+        //查询并设置规格选项列表
         TbSpecificationOption param = new TbSpecificationOption();
-        //将规格id设置到
         param.setSpecId(id);
-        List<TbSpecificationOption> specificationOptions = specificationOptionMapper.select(param);
+        List<TbSpecificationOption> specificationOptionList = specificationOptionMapper.select(param);
 
-        specification.setSpecificationOptionList(specificationOptions);
+        specification.setSpecificationOptionList(specificationOptionList);
+
         return specification;
     }
 
-    @Override
+    //修改
     public void update(Specification specification) {
         //更新规格
         specificationMapper.updateByPrimaryKeySelective(specification.getSpecification());
@@ -88,21 +86,22 @@ public class SpecificationServiceImpl extends BaseServiceImpl<TbSpecification> i
         specificationOptionMapper.delete(param);
 
         //新增规格选项
-        if(specification.getSpecificationOptionList() != null && specification.getSpecificationOptionList().size()>0){
-            for(TbSpecificationOption tbSpecificationOption:specification.getSpecificationOptionList()){
+        if(specification.getSpecificationOptionList() != null && specification.getSpecificationOptionList().size() > 0){
+            for(TbSpecificationOption tbSpecificationOption : specification.getSpecificationOptionList()){
                 tbSpecificationOption.setSpecId(specification.getSpecification().getId());
+                //保存规格选项
                 specificationOptionMapper.insertSelective(tbSpecificationOption);
             }
         }
     }
 
-    @Override
+    //批量删除
     public void deleteSpecificationByIds(Long[] ids) {
         //批量删除规格
         deleteByIds(ids);
 
         //批量删除规格选项
-        Example example  = new Example(TbSpecificationOption.class);
+        Example example = new Example(TbSpecificationOption.class);
         example.createCriteria().andIn("specId", Arrays.asList(ids));
         specificationOptionMapper.deleteByExample(example);
     }

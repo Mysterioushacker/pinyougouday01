@@ -32,7 +32,9 @@ app.controller("goodsController", function ($scope, $controller, $location, good
         object.success(function (response) {
             if(response.success){
                 alert(response.message);
-                location.href = "goods.html";
+                //location.href = "goods.html";
+                $scope.entity = {};
+                editor.html("");//清空富文本编辑器的内容
             } else {
                 alert(response.message);
             }
@@ -134,6 +136,7 @@ app.controller("goodsController", function ($scope, $controller, $location, good
         if (newValue != undefined) {
             itemCatService.findByParentId(newValue).success(function (response) {
                 $scope.itemCat2List = response;
+                $scope.itemCat3List = "";
             });
         }
     });

@@ -26,17 +26,12 @@ public class SellerServiceImpl extends BaseServiceImpl<TbSeller> implements Sell
 
         Example example = new Example(TbSeller.class);
         Example.Criteria criteria = example.createCriteria();
-        //根据审核状态查询
         if(!StringUtils.isEmpty(seller.getStatus())){
-            criteria.andLike("status",seller.getStatus());
+            criteria.andLike("status", seller.getStatus());
         }
-
-        //根据商店名称模糊查询
         if(!StringUtils.isEmpty(seller.getNickName())){
             criteria.andLike("nickName", "%" + seller.getNickName() + "%");
         }
-
-        //根据公司名称模糊查询
         if(!StringUtils.isEmpty(seller.getName())){
             criteria.andLike("name", "%" + seller.getName() + "%");
         }

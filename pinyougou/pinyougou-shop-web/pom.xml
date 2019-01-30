@@ -24,6 +24,7 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
     </dependency>
+
     <!-- dubbo 相关 -->
     <dependency>
       <groupId>com.alibaba</groupId>

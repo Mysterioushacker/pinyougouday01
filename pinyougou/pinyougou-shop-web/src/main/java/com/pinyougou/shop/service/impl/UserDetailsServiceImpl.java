@@ -16,6 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     private SellerService sellerService;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -23,10 +24,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
         //根据登录名到数据库中查询密码
         TbSeller seller = sellerService.findOne(username);
-        //表示密码正确并且已经审核通过
-        if(seller != null && "1".equals(seller.getStatus())){
-            return new User(username,seller.getPassword(),authorities);
+        if(seller != null && "1".equals(seller.getStatus())){//已审核通过的才能登录
+            return new User(username, seller.getPassword(), authorities);
         }
+
         return null;
     }
 

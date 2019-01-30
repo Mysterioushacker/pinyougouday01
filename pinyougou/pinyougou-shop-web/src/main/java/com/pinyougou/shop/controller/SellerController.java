@@ -31,19 +31,18 @@ public class SellerController {
     @PostMapping("/add")
     public Result add(@RequestBody TbSeller seller) {
         try {
-            //不设置也可以，设置默认为0，也就是未审核
-            seller.setStatus("0");
+            seller.setStatus("0");//未审核
 
             //密码加密
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            seller.setPassword(passwordEncoder.encode(seller.getPassword()));
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
 
             sellerService.add(seller);
-            return Result.ok("增加成功");
+            return Result.ok("商家入驻成功");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.fail("增加失败");
+        return Result.fail("商家入驻失败");
     }
 
     @GetMapping("/findOne")

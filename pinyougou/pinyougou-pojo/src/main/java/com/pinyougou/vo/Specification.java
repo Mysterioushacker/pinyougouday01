@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Specification implements Serializable {
+
     private TbSpecification specification;
     private List<TbSpecificationOption> specificationOptionList;
 
