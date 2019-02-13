@@ -41,6 +41,7 @@ app.controller("goodsController", function ($scope, $controller, $location, good
         });
     };
 
+    //根据id查询商品，回显
     $scope.findOne = function () {
         //获取路径中的商品id
         var id = $location.search()["id"];
@@ -173,7 +174,6 @@ app.controller("goodsController", function ($scope, $controller, $location, good
                     $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
                 }
             });
-
             //根据分类模板id查询其对应的规格及其规格的选项
             typeTemplateService.findSpecList(newValue).success(function (response) {
                 $scope.specList = response;
@@ -269,6 +269,41 @@ app.controller("goodsController", function ($scope, $controller, $location, good
             goodsService.updateStatus($scope.selectedIds, status).success(function (response) {
                 if(response.success) {
                     //刷新列表并清空选中的那些商品
+                    $scope.reloadList();
+                    $scope.selectedIds = [];
+                } else {
+                    alert(response.message);
+                }
+            });
+        }
+    };
+
+    $scope.ups = function () {
+        if($scope.selectedIds.length < 1){
+            alert("请先选择要上架的商品");
+            return;
+        }
+        if(confirm("确定要上架已选择的商品吗")){
+            goodsService.ups($scope.selectedIds).success(function (response) {
+                if(response.success){
+                    $scope.reloadList();
+                    $scope.selectedIds = [];
+                } else {
+                    alert(response.message);
+                }
+            });
+        }
+    };
+
+
+    $scope.downs = function () {
+        if($scope.selectedIds.length < 1){
+            alert("请先选择要下架的商品");
+            return;
+        }
+        if(confirm("确定要下架已选择的商品吗")){
+            goodsService.downs($scope.selectedIds).success(function (response) {
+                if(response.success){
                     $scope.reloadList();
                     $scope.selectedIds = [];
                 } else {

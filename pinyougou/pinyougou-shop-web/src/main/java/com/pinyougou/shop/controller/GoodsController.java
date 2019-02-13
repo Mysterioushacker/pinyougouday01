@@ -46,14 +46,20 @@ public class GoodsController {
     }
 
     @GetMapping("/findOne")
-    public TbGoods findOne(Long id) {
-        return goodsService.findOne(id);
+    public Goods findOne(Long id) {
+        return goodsService.findGoodsById(id);
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody TbGoods goods) {
+    public Result update(@RequestBody Goods goods) {
         try {
-            goodsService.update(goods);
+            //校验商家
+            TbGoods oldGoods = goodsService.findOne(goods.getGoods().getId());
+            String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+            if(!sellerId.equals(oldGoods.getSellerId()) || !sellerId.equals(goods.getGoods().getSellerId())){
+                return Result.fail("操作非法");
+            }
+            goodsService.updateGoods(goods);
             return Result.ok("修改成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,12 +70,34 @@ public class GoodsController {
     @GetMapping("/delete")
     public Result delete(Long[] ids) {
         try {
-            goodsService.deleteByIds(ids);
+            goodsService.deleteGoodsByIds(ids);
             return Result.ok("删除成功");
         } catch (Exception e) {
             e.printStackTrace();
         }
         return Result.fail("删除失败");
+    }
+
+    @GetMapping("/ups")
+    public Result ups(Long[] ids) {
+        try {
+            goodsService.upGoods(ids);
+            return Result.ok("上架成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.fail("上架失败");
+    }
+
+    @GetMapping("/downs")
+    public Result downs(Long[] ids) {
+        try {
+            goodsService.downGoods(ids);
+            return Result.ok("下架成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.fail("下架失败");
     }
 
     /**
@@ -82,7 +110,28 @@ public class GoodsController {
     @PostMapping("/search")
     public PageResult search(@RequestBody  TbGoods goods, @RequestParam(value = "page", defaultValue = "1")Integer page,
                                @RequestParam(value = "rows", defaultValue = "10")Integer rows) {
+
+        //只能查询当前商家自己的商品
+        String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        goods.setSellerId(sellerId);
         return goodsService.search(page, rows, goods);
+    }
+
+    /**
+     * 更新商品状态
+     * @param ids
+     * @param status
+     * @return
+     */
+    @GetMapping("/updateStatus")
+    public Result updateStatus(Long[] ids,String status){
+        try{
+            goodsService.updateStatus(ids,status);
+            return Result.ok("更新成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.fail("更新失败");
     }
 
 }

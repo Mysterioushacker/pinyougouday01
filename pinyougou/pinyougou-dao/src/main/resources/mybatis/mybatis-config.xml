@@ -12,7 +12,7 @@
     <!--分页助手插件-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
-            <property name="helperDialect" value="mysql"/>
+            <property name="helperDialect" value="mysql"></property>
         </plugin>
     </plugins>
 </configuration>

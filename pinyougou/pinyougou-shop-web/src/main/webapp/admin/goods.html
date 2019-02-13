@@ -31,7 +31,7 @@
 
 </head>
 
-<body ng-app="pinyougou" ng-controller="goodsController" ng-init="findItemCatList()" class="hold-transition skin-red sidebar-mini">
+<body ng-app="pinyougou" ng-controller="goodsController" ng-init="findItemCatList();" class="hold-transition skin-red sidebar-mini">
   <!-- .box-body -->
 
                     <div class="box-header with-border">
@@ -50,8 +50,8 @@
                                         <button type="button" class="btn btn-default" title="新建" ><i class="fa fa-file-o"></i> 新建</button>
                                         <button type="button" class="btn btn-default" ng-click="delete()"><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" ng-click="updateStatus('1')"><i class="fa fa-trash-o"></i> 提交审核</button>
-                                        <button type="button" class="btn btn-default" title="上架" ><i class="fa fa-check"></i> 上架</button>
-                                        <button type="button" class="btn btn-default" title="下架" ><i class="fa fa-check"></i> 下架</button>
+                                        <button type="button" class="btn btn-default" title="上架" ng-click="ups()"><i class="fa fa-check"></i> 上架</button>
+                                        <button type="button" class="btn btn-default" title="下架" ng-click="downs()"><i class="fa fa-check"></i> 下架</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
 			                          <tr ng-repeat="entity in list">
 			                              <td><input ng-click="updateSelection($event, entity.id)" type="checkbox"></td>
 				                          <td>{{entity.id}}</td>
-									      <td>{{entity.goodsName}}</td>
+								    	      <td>{{entity.goodsName}}</td>
 									      <td>{{entity.price}}</td>
 									      <td>{{itemCatList[entity.category1Id]}}</td>
 									      <td>{{itemCatList[entity.category2Id]}}</td>
