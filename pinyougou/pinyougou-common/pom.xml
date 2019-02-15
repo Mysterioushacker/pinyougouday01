@@ -10,12 +10,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pinyougou-common</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>../pinyougou-search</module>
+    </modules>
 
     <dependencies>
         <dependency>
             <groupId>fastdfs_client</groupId>
             <artifactId>fastdfs_client</artifactId>
             <version>1.25</version>
+        </dependency>
+
+        <!-- redis 缓存 -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
         </dependency>
     </dependencies>
 
