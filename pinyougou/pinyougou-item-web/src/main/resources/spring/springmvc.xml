@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:properties/*.properties"/>
+
+    <mvc:annotation-driven>
+        <!--以后的处理器中的方法json对象与java对象换转的时候使用如下的工具类-->
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes"
+                          value="application/json"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--配置Freemarker配置对象；配置模版路径-->
+    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!--生成的文件编码-->
+        <property name="defaultEncoding" value="utf-8"/>
+        <!--模版路径-->
+        <property name="templateLoaderPath" value="/views"/>
+    </bean>
+
+    <!--配置freemarker视图解析器-->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!--freemarker模版文件的后缀-->
+        <property name="suffix" value=".ftl"/>
+        <!--指定输出文件的文件内容类型-->
+        <property name="contentType" value="text/html;charset=utf-8"/>
+    </bean>
+
+    <!--  引用 dubbo  服务  -->
+    <!--消费者名称-->
+    <dubbo:application name="pinyougou-item-web"/>
+    <!--注册中心地址-->
+    <dubbo:registry address="zookeeper://192.168.12.168:2181"/>
+    <!--扫描阿里注解 获取对应服务的地址信息生成代理对象-->
+    <dubbo:annotation package="com.pinyougou.item"/>
+</beans>

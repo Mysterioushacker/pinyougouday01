@@ -19,6 +19,9 @@
         <module>pinyougou-portal-web</module>
         <module>pinyougou-solr-import</module>
         <module>pinyougou-search-web</module>
+        <module>pinyougou-item-web</module>
+        <module>pinyougou-user</module>
+        <module>pinyougou-user-web</module>
     </modules>
 
     <!-- 集中定义依赖版本号 -->
