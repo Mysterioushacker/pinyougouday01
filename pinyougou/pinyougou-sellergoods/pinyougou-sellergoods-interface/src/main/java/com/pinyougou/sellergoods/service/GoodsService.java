@@ -1,9 +1,12 @@
 package com.pinyougou.sellergoods.service;
 
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbItem;
 import com.pinyougou.service.BaseService;
 import com.pinyougou.vo.Goods;
 import com.pinyougou.vo.PageResult;
+
+import java.util.List;
 
 public interface GoodsService extends BaseService<TbGoods> {
 
@@ -22,4 +25,8 @@ public interface GoodsService extends BaseService<TbGoods> {
     void upGoods(Long[] ids);
 
     void downGoods(Long[] ids);
+
+    List<TbItem> findItemListByGoodsIdsAndStatus(Long[] ids, String s);
+
+    Goods findGoodsByIdAndStatus(Long goodsId, String s);
 }

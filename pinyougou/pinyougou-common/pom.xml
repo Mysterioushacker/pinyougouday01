@@ -10,10 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pinyougou-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>../pinyougou-search</module>
-    </modules>
+
 
     <dependencies>
         <dependency>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 真正可以产生 Connection 的 ConnectionFactory，由对应的 JMS 服务厂商提供 -->
+    <bean id="targetConnectionFactory"
+          class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.12.168:61616"/>
+    </bean>
+    <!-- Spring 用于管理真正的 ConnectionFactory 的 ConnectionFactory -->
+    <bean id="mqConnectionFactory"
+          class="org.springframework.jms.connection.SingleConnectionFactory">
+        <!-- 目标 ConnectionFactory 对应真实的可以产生 JMS Connection 的
+       ConnectionFactory -->
+        <property name="targetConnectionFactory"
+                  ref="targetConnectionFactory"/>
+    </bean>
+    <!-- Spring 提供的 JMS 工具类，它可以进行消息发送、接收等 -->
+    <bean id="jmsTemplate"
+          class="org.springframework.jms.core.JmsTemplate">
+        <!-- 这个 connectionFactory 对应的是我们定义的 Spring 提供的那个
+       ConnectionFactory 对象 -->
+        <property name="connectionFactory" ref="mqConnectionFactory"/>
+    </bean>
+    <!--队列模式，在商品审核后接收的商品列表队列 -->
+    <bean id="itcastSmsQueue"
+          class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="itcast_sms_queue"/>
+    </bean>
+</beans>
