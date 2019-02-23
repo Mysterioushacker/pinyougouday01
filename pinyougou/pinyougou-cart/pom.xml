@@ -10,11 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pinyougou</groupId>
-    <artifactId>pinyougou-search</artifactId>
+    <artifactId>pinyougou-cart</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>pinyougou-search-interface</module>
-        <module>pinyougou-search-service</module>
+        <module>pinuougou-cart-interface</module>
+        <module>pinyougou-cart-service</module>
     </modules>
 
 
