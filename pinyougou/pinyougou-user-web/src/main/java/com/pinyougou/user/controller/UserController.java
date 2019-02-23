@@ -6,6 +6,7 @@ import com.pinyougou.pojo.TbUser;
 import com.pinyougou.user.service.UserService;
 import com.pinyougou.vo.PageResult;
 import com.pinyougou.vo.Result;
+
 import com.sun.corba.se.spi.ior.ObjectKey;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
 
 @RequestMapping("/user")
 @RestController
@@ -119,6 +126,7 @@ public class UserController {
         return Result.fail("发送短信验证码失败！");
     }
 
+<<<<<<< HEAD
 
     /**
      * 获取当前登录用户信息
@@ -131,4 +139,6 @@ public class UserController {
         map.put("username",username);
         return map;
     }
+=======
+>>>>>>> origin/master
 }

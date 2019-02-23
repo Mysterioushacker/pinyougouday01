@@ -11,6 +11,10 @@
 
     <groupId>com.pinyougou</groupId>
     <artifactId>pinyougou-common</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>../pinyougou-search</module>
+    </modules>
 
     <dependencies>
         <dependency>
